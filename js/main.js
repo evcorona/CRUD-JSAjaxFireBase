@@ -30,12 +30,10 @@ const crudTheJson = (theEntry, action) => {
     case "POST":
       xhttp.open(action, endpoint, true);
       xhttp.send(JSON.stringify(theEntry));
-      console.log(action)
       break
     case "DELETE":
       xhttp.open(action, endpoint.replace(".json", theEntry + "/.json"), true);
       xhttp.send();
-      console.log(action)
       break
   }
 }
@@ -57,7 +55,7 @@ const fillDataToTable = theJson => {
                   <td>${lastName}</td>
                   <td>${bornDate}</td>
                   <td>${type}</td>
-                  <td>${isActive}</td>
+                  <td>${isActive === true ? "Activo" : "Inactivo"}</td>
                   <td> <button type="button" class="btn btn-danger btn-sm btn-delete" data-entry-id=${key}>Eliminar</button>
               </tr>`
     document.getElementById("json-table").innerHTML = currentContent + newRow
@@ -73,7 +71,7 @@ const getFormData = () => {
   let lastName = document.getElementById("last-name").value
   let bornDate = document.getElementById("born-date").value
   let type = document.getElementById("type-selector").value
-  let isActive = document.getElementById("is-Active").value
+  let isActive = document.getElementById("is-Active").value.checked
   isActive == "true" ? isActive = true : isActive = false
   let newObject = { name, lastName, bornDate, type, isActive }
   crudTheJson(newObject, "POST")  //Funcion CRUD
@@ -86,7 +84,7 @@ document.getElementById("save-button").addEventListener("click", getFormData)
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
-//Listener del Boton de Eliminar
+//Listener de los botones delete
 const addBtnDeleteListener = () => {
   let btnDelete = document.querySelectorAll(".btn-delete")
   btnDelete.forEach(button => {
