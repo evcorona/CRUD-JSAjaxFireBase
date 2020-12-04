@@ -1,6 +1,3 @@
-var idObject  //El objeto a borrar
-var action    //La accion a realizar de CRUD en JSON: get, post, delete, 
-
 //--------------------------------------------------------------------------------------------------
 //Ejecuta acciones de CRUD
 const crudTheJson = (theEntry, action) => {
