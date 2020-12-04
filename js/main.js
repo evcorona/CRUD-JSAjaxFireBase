@@ -1,22 +1,32 @@
 //--------------------------------------------------------------------------------------------------
-//Ejecuta acciones de CRUD
+//Ejecuta solo GET R de un request
+const getTheJson = () => {
+  let endpoint = "https://ajaxclass-1ca34.firebaseio.com/verox/koders/.json";
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      let response = JSON.parse(xhttp.response);
+      fillDataToTable(response)
+    }
+  };
+  xhttp.open("GET", endpoint, true);
+  xhttp.send();
+}
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+//Ejecuta acciones de CUD
 const crudTheJson = (theEntry, action) => {
   let endpoint = "https://ajaxclass-1ca34.firebaseio.com/verox/koders/.json";
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       let response = JSON.parse(xhttp.response);
-      console.log("json", response)
       fillDataToTable(response)
+      getTheJson()
     }
   };
 
   switch (action) {
-    case "GET":
-      xhttp.open(action, endpoint, true);
-      xhttp.send();
-      console.log(action)
-      break
     case "POST":
       xhttp.open(action, endpoint, true);
       xhttp.send(JSON.stringify(theEntry));
@@ -48,7 +58,7 @@ const fillDataToTable = theJson => {
                   <td>${bornDate}</td>
                   <td>${type}</td>
                   <td>${isActive}</td>
-                  <td> <button type="button" class="btn btn-danger btn-sm btn-remove" data-entry-id=${key}>Eliminar</button>
+                  <td> <button type="button" class="btn btn-danger btn-sm btn-delete" data-entry-id=${key}>Eliminar</button>
               </tr>`
     document.getElementById("json-table").innerHTML = currentContent + newRow
   }
@@ -66,9 +76,7 @@ const getFormData = () => {
   let isActive = document.getElementById("is-Active").value
   isActive == "true" ? isActive = true : isActive = false
   let newObject = { name, lastName, bornDate, type, isActive }
-  console.log(newObject)
   crudTheJson(newObject, "POST")  //Funcion CRUD
-  crudTheJson("", "GET")  //Funcion CRUD
 }
 //--------------------------------------------------------------------------------------------------
 
@@ -84,9 +92,7 @@ const addBtnDeleteListener = () => {
   btnDelete.forEach(button => {
     button.addEventListener("click", event => {
       let entryID = event.target.dataset.entryId
-      console.log("listener")
       crudTheJson(entryID, "DELETE")
-      crudTheJson("", "GET")  //Funcion CRUD
     })
   })
 }
@@ -94,4 +100,4 @@ const addBtnDeleteListener = () => {
 
 //--------------------------------------------------------------------------------------------------
 //Ejecucion de Funciones
-crudTheJson("", "GET")  //Funcion CRUD
+getTheJson()  //Funcion solo GET
