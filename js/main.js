@@ -71,10 +71,15 @@ const getFormData = () => {
   let lastName = document.getElementById("last-name").value
   let bornDate = document.getElementById("born-date").value
   let type = document.getElementById("type-selector").value
-  let isActive = document.getElementById("is-Active").value.checked
-  isActive == "true" ? isActive = true : isActive = false
-  let newObject = { name, lastName, bornDate, type, isActive }
-  crudTheJson(newObject, "POST")  //Funcion CRUD
+
+  if (name != "" && lastName != "" && bornDate != "" && type != "") {
+    let isActive = document.getElementById("is-Active").value.checked
+    isActive == "true" ? isActive = true : isActive = false
+    let newObject = { name, lastName, bornDate, type, isActive }
+    crudTheJson(newObject, "POST")  //Funcion CRUD}
+  }
+  else { alert("Es necesario completar todos los datos para guardar")}
+
 }
 //--------------------------------------------------------------------------------------------------
 
