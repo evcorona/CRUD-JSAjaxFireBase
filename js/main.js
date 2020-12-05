@@ -77,16 +77,22 @@ const getFormData = () => {
     isActive == "true" ? isActive = true : isActive = false
     let newObject = { name, lastName, bornDate, type, isActive }
     crudTheJson(newObject, "POST")  //Funcion CRUD}
+    clearData()
   }
   else { alert("Es necesario completar todos los datos para guardar")}
 
 }
 //--------------------------------------------------------------------------------------------------
-
 //--------------------------------------------------------------------------------------------------
 //Listener del Boton de Guardar
 document.getElementById("save-button").addEventListener("click", getFormData)
 //--------------------------------------------------------------------------------------------------
+
+const clearData = () => {
+  let formDatas = ["name","last-name","born-date","type-selector"]
+  formDatas.forEach(data => 
+    document.getElementById(data).value = "" )
+}
 
 //--------------------------------------------------------------------------------------------------
 //Listener de los botones delete
