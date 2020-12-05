@@ -73,8 +73,7 @@ const getFormData = () => {
   let type = document.getElementById("type-selector").value
 
   if (name != "" && lastName != "" && bornDate != "" && type != "") {
-    let isActive = document.getElementById("is-Active").value.checked
-    isActive == "true" ? isActive = true : isActive = false
+    let isActive = document.getElementById("is-Active").checked
     let newObject = { name, lastName, bornDate, type, isActive }
     crudTheJson(newObject, "POST")  //Funcion CRUD}
     clearData()
